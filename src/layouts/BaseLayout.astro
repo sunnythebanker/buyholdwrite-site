@@ -4,12 +4,52 @@ import '../styles/tokens.css';
 interface Props {
   title?: string;
   description?: string;
+  ogImage?: string;
+  ogType?: 'website' | 'article';
+  canonicalPath?: string;
+  showFooterTeaser?: boolean;
+  currentPath?: string;
 }
 
 const {
   title = 'buyholdwrite.com',
-  description = 'Educational only — not financial advice.',
+  description = 'Educational content for 401K rollovers, self-directed IRAs, and US investing for non-residents. Educational only — not financial advice.',
+  ogImage,
+  ogType = 'website',
+  canonicalPath,
+  showFooterTeaser = false,
+  currentPath: currentPathProp,
 } = Astro.props;
+
+const SITE_URL = 'https://buyholdwrite.com';
+const currentPath = currentPathProp ?? Astro.url.pathname;
+const canonicalUrl = canonicalPath
+  ? `${SITE_URL}${canonicalPath}`
+  : `${SITE_URL}${Astro.url.pathname}`;
+
+// Decision #14: noindex on Cloudflare Pages preview branches.
+// CF_PAGES_BRANCH is set per-build by Cloudflare. Local builds + previews
+// get noindex; only main branch builds (production) omit it.
+const isPreview = import.meta.env.CF_PAGES_BRANCH !== 'main';
+
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'buyholdwrite.com',
+  url: SITE_URL,
+  logo: `${SITE_URL}/logos/stack-icon-light.svg`,
+  sameAs: [
+    'https://youtube.com/@SunnyTheBanker',
+    'https://x.com/SunnyTheBanker',
+  ],
+};
+
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'buyholdwrite.com',
+  url: SITE_URL,
+};
 ---
 
 <!doctype html>
@@ -20,71 +60,505 @@ const {
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" href="/favicon.ico" />
+    <link rel="canonical" href={canonicalUrl} />
+
+    {isPreview && <meta name="robots" content="noindex, nofollow" />}
+
+    <link rel="icon" type="image/svg+xml" href="/logos/stack-icon-light.svg" />
+
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:site_name" content="buyholdwrite.com" />
+    <meta property="og:locale" content="en_US" />
+    {ogImage && <meta property="og:image" content={ogImage} />}
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@SunnyTheBanker" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    {ogImage && <meta name="twitter:image" content={ogImage} />}
+
+    <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
   </head>
   <body>
-    <header class="site-header">
-      <a href="/" class="brand">buyholdwrite.com</a>
+    <slot name="progress-bar" />
+
+    <header class="site-header" id="site-header">
+      <a href="/" class="nav-logo" aria-label="buyholdwrite.com home">
+        <img src="/logos/stack-horizontal-no-tagline-light.svg" alt="STACK · Sell Theta · Accumulate · Compound · Keep" />
+      </a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="/about" class:list={['nav-link', { 'is-current': currentPath === '/about' }]} aria-current={currentPath === '/about' ? 'page' : undefined}>About</a>
+        <a href="/stack" class:list={['nav-link', { 'is-current': currentPath === '/stack' }]} aria-current={currentPath === '/stack' ? 'page' : undefined}>STACK</a>
+        <a href="/blog" class:list={['nav-link', { 'is-current': currentPath?.startsWith('/blog') }]} aria-current={currentPath?.startsWith('/blog') ? 'page' : undefined}>Blog</a>
+        <a href="/newsletter" class:list={['nav-link', { 'is-current': currentPath === '/newsletter' }]} aria-current={currentPath === '/newsletter' ? 'page' : undefined}>Newsletter</a>
+      </nav>
+      <a href="/newsletter" class="nav-cta nav-cta-desktop">Subscribe →</a>
+      <button class="hamburger" aria-label="Open menu" aria-expanded="false" id="hamburger-btn" type="button">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="mobile-menu" id="mobile-menu">
+        <a href="/about" class:list={[{ 'is-current': currentPath === '/about' }]}>About</a>
+        <a href="/stack" class:list={[{ 'is-current': currentPath === '/stack' }]}>STACK</a>
+        <a href="/blog" class:list={[{ 'is-current': currentPath?.startsWith('/blog') }]}>Blog</a>
+        <a href="/newsletter" class:list={[{ 'is-current': currentPath === '/newsletter' }]}>Newsletter</a>
+        <a href="/newsletter" class="nav-cta">Subscribe →</a>
+      </div>
     </header>
-    <main>
+
+    <main id="main">
       <slot />
     </main>
-    <footer class="site-footer">
-      <p class="disclaimer">Educational only — not financial advice. Sunny Sun is not a registered investment advisor.</p>
-      <p class="copyright">© 2026 Sunny Sun</p>
+
+    <footer>
+      {showFooterTeaser && (
+        <div class="footer-teaser">
+          <div class="footer-teaser-eyebrow">The weekly STACK newsletter</div>
+          <h3>The weekly STACK newsletter. Free. Educational only.</h3>
+          <p>Every Friday: trade walk-through, market read, one banker insight.</p>
+          <form class="signup-row" action="/newsletter" method="get">
+            <input type="email" name="email" placeholder="name@example.com" aria-label="Email address" required />
+            <button type="submit">Subscribe →</button>
+          </form>
+        </div>
+      )}
+
+      <div class="footer-main">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <img src="/logos/stack-horizontal-with-tagline-dark.svg" alt="STACK · Sell Theta · Accumulate · Compound · Keep" />
+            <div class="footer-tagline">Educational content for 401K rollovers, self-directed IRAs, and US investing for non-residents.</div>
+          </div>
+          <div class="footer-col">
+            <h4>Site</h4>
+            <a href="/about">About</a>
+            <a href="/stack">STACK methodology</a>
+            <a href="/blog">Blog</a>
+            <a href="/newsletter">Newsletter</a>
+          </div>
+          <div class="footer-col">
+            <h4>Legal</h4>
+            <a href="/privacy">Privacy Policy</a>
+            <a href="/disclaimer">Disclaimer</a>
+          </div>
+          <div class="footer-col">
+            <h4>Follow</h4>
+            <div class="social-row">
+              <a class="social-icon" href="https://youtube.com/@SunnyTheBanker" aria-label="YouTube" target="_blank" rel="noopener">▶</a>
+              <a class="social-icon" href="https://x.com/SunnyTheBanker" aria-label="X / Twitter" target="_blank" rel="noopener">𝕏</a>
+              {/* TODO: enable when /rss.xml ships in Phase 4 */}
+            </div>
+          </div>
+        </div>
+        <div class="footer-base">
+          <div>© 2026 buyholdwrite.com</div>
+          <div class="footer-base-links">
+            <a href="/privacy">Privacy</a>
+            <a href="/disclaimer">Disclaimer</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-disclaimer">
+        <div class="footer-disclaimer-inner">
+          Educational only — not financial advice. Sunny Sun is not a registered investment advisor. The information presented on this site is for educational purposes only and does not constitute investment advice, financial advice, or any other type of advice. Always consult with a qualified professional before making investment decisions.
+        </div>
+      </div>
     </footer>
+
+    <script>
+      // Sticky nav scroll-shadow toggle (per design spec 03 §01.B, threshold 64px)
+      (function () {
+        const header = document.getElementById('site-header');
+        if (!header) return;
+        const threshold = 64;
+        let stuck = false;
+        function check() {
+          const should = window.scrollY > threshold;
+          if (should !== stuck) {
+            header.classList.toggle('is-stuck', should);
+            stuck = should;
+          }
+        }
+        check();
+        window.addEventListener('scroll', check, { passive: true });
+      })();
+
+      // Mobile hamburger toggle (per design spec 03 §01.C)
+      (function () {
+        const btn = document.getElementById('hamburger-btn');
+        const menu = document.getElementById('mobile-menu');
+        if (!btn || !menu) return;
+        btn.addEventListener('click', () => {
+          const isOpen = btn.getAttribute('aria-expanded') === 'true';
+          const next = !isOpen;
+          btn.setAttribute('aria-expanded', String(next));
+          btn.classList.toggle('is-open', next);
+          btn.setAttribute('aria-label', next ? 'Close menu' : 'Open menu');
+          menu.classList.toggle('is-open', next);
+          document.body.style.overflow = next ? 'hidden' : '';
+        });
+      })();
+    </script>
+
+    <style is:global>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: var(--font-body);
+        font-size: var(--type-body-size);
+        line-height: var(--type-body-lh);
+        color: var(--text-primary);
+        background: var(--bg-page);
+      }
+      a { color: inherit; }
+      img, svg { display: block; max-width: 100%; }
+      h1, h2, h3, h4, h5, h6 {
+        font-family: var(--font-display);
+        color: var(--text-heading);
+        font-weight: 700;
+        margin: 0;
+      }
+      :focus-visible {
+        outline: 2px solid var(--color-gold);
+        outline-offset: 2px;
+        border-radius: var(--radius-sm);
+      }
+    </style>
+
+    <style>
+      /* ===== HEADER / NAV ===== */
+      .site-header {
+        background: #fff;
+        height: 72px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 var(--space-5);
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        border-bottom: 1px solid var(--border-default);
+        transition: box-shadow var(--dur-base) var(--ease-base);
+      }
+      .site-header.is-stuck {
+        box-shadow: var(--shadow-nav-stuck);
+      }
+      .nav-logo {
+        display: block;
+        text-decoration: none;
+      }
+      .nav-logo img {
+        height: 36px;
+        width: auto;
+      }
+      .nav-links {
+        display: flex;
+        gap: var(--space-3);
+        align-items: center;
+      }
+      .nav-link {
+        font-family: var(--font-body);
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--color-navy);
+        text-decoration: none;
+        padding: 8px 4px;
+        position: relative;
+      }
+      .nav-link.is-current::after {
+        content: "";
+        position: absolute;
+        left: 4px;
+        right: 4px;
+        bottom: 0;
+        height: 2px;
+        background: var(--color-gold);
+      }
+      .nav-cta {
+        font-family: var(--font-body);
+        font-size: 13px;
+        font-weight: 700;
+        background: var(--color-gold);
+        color: var(--color-navy);
+        padding: 10px 18px;
+        border-radius: var(--radius-md);
+        text-decoration: none;
+        border: 2px solid var(--color-gold);
+        transition: background var(--dur-fast) var(--ease-base), color var(--dur-fast) var(--ease-base);
+        display: inline-block;
+      }
+      .nav-cta:hover {
+        background: transparent;
+        color: var(--color-navy);
+      }
+
+      /* Hamburger - hidden on desktop */
+      .hamburger {
+        display: none;
+        width: 36px;
+        height: 36px;
+        background: transparent;
+        border: 0;
+        cursor: pointer;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+        padding: 8px;
+      }
+      .hamburger span {
+        display: block;
+        width: 20px;
+        height: 2px;
+        background: var(--color-navy);
+        border-radius: 2px;
+        transition: transform var(--dur-base) var(--ease-base), opacity var(--dur-base) var(--ease-base);
+      }
+      .hamburger.is-open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+      .hamburger.is-open span:nth-child(2) { opacity: 0; }
+      .hamburger.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+      /* Mobile menu — hidden by default everywhere; toggled visible on mobile via .is-open */
+      .mobile-menu {
+        display: none;
+      }
+
+      @media (max-width: 780px) {
+        .site-header {
+          height: 64px;
+          padding: 0 var(--space-3);
+        }
+        .nav-logo img {
+          height: 30px;
+        }
+        .nav-links {
+          display: none;
+        }
+        .nav-cta-desktop {
+          display: none;
+        }
+        .hamburger {
+          display: inline-flex;
+        }
+        .mobile-menu.is-open {
+          display: block;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          right: 0;
+          background: #fff;
+          border-top: 1px solid var(--border-default);
+          border-bottom: 1px solid var(--border-default);
+          padding: var(--space-3);
+          box-shadow: var(--shadow-nav-stuck);
+        }
+        .mobile-menu a {
+          display: block;
+          font-family: var(--font-body);
+          font-size: 17px;
+          font-weight: 600;
+          color: var(--color-navy);
+          text-decoration: none;
+          padding: 14px 4px;
+          border-bottom: 1px solid var(--border-default);
+        }
+        .mobile-menu a.is-current {
+          border-left: 3px solid var(--color-gold);
+          padding-left: 14px;
+          margin-left: -4px;
+        }
+        .mobile-menu .nav-cta {
+          margin-top: var(--space-3);
+          width: auto;
+          border: 2px solid var(--color-gold);
+        }
+      }
+
+      main {
+        min-height: 60vh;
+      }
+
+      /* ===== FOOTER ===== */
+      /* Band 1 — warm-white teaser (conditional, opt-in via showFooterTeaser) */
+      .footer-teaser {
+        background: var(--bg-page);
+        border-top: 1px solid var(--border-default);
+        padding: var(--space-8) var(--space-5);
+        text-align: center;
+      }
+      .footer-teaser-eyebrow {
+        font-size: 11px;
+        letter-spacing: var(--tracking-eyebrow);
+        color: var(--color-gold);
+        text-transform: uppercase;
+        font-weight: 700;
+        margin-bottom: var(--space-2);
+      }
+      .footer-teaser h3 {
+        font-size: 32px;
+        line-height: 1.15;
+        margin-bottom: var(--space-2);
+      }
+      .footer-teaser p {
+        margin: 0 auto var(--space-3);
+        max-width: 520px;
+        color: var(--text-muted);
+        font-size: 16px;
+      }
+      .signup-row {
+        display: flex;
+        gap: 8px;
+        justify-content: center;
+        max-width: 480px;
+        margin: 0 auto;
+        flex-wrap: wrap;
+      }
+      .signup-row input {
+        flex: 1;
+        min-width: 200px;
+        font-family: var(--font-body);
+        font-size: 15px;
+        padding: 12px 14px;
+        background: #fff;
+        color: var(--color-text);
+        border: 1px solid var(--border-input);
+        border-radius: var(--radius-md);
+      }
+      .signup-row button {
+        font-family: var(--font-body);
+        font-weight: 700;
+        font-size: 14px;
+        background: var(--color-gold);
+        color: var(--color-navy);
+        border: 2px solid var(--color-gold);
+        padding: 12px 22px;
+        border-radius: var(--radius-md);
+        cursor: pointer;
+      }
+
+      /* Band 2 — charcoal main */
+      .footer-main {
+        background: var(--color-charcoal);
+        color: var(--text-on-dark);
+        padding: var(--space-6) var(--space-5) var(--space-5);
+      }
+      .footer-grid {
+        display: grid;
+        grid-template-columns: 1.4fr 1fr 1fr 1fr;
+        gap: var(--space-5);
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+      .footer-brand img {
+        height: 48px;
+        width: auto;
+        margin-bottom: var(--space-2);
+      }
+      .footer-tagline {
+        font-size: 13px;
+        color: #9CA3AF;
+        line-height: 1.5;
+        max-width: 280px;
+      }
+      .footer-col h4 {
+        font-family: var(--font-body);
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: var(--tracking-eyebrow);
+        text-transform: uppercase;
+        color: var(--color-gold);
+        margin-bottom: var(--space-2);
+      }
+      .footer-col a {
+        display: block;
+        font-family: var(--font-body);
+        font-size: 14px;
+        color: var(--text-on-dark);
+        text-decoration: none;
+        padding: 6px 0;
+      }
+      .social-row {
+        display: flex;
+        gap: 10px;
+        margin-top: var(--space-1);
+      }
+      .social-icon {
+        width: 36px;
+        height: 36px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: var(--radius-md);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-on-dark);
+        font-size: 13px;
+        text-decoration: none;
+        font-weight: 700;
+      }
+      .footer-base {
+        border-top: 1px solid rgba(255, 255, 255, 0.10);
+        margin-top: var(--space-5);
+        padding-top: var(--space-3);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: var(--space-2);
+        max-width: 1100px;
+        margin-left: auto;
+        margin-right: auto;
+        font-size: 12px;
+        color: #9CA3AF;
+      }
+      .footer-base-links a {
+        color: #9CA3AF;
+        text-decoration: none;
+        margin-right: 18px;
+      }
+      .footer-base-links a:last-child {
+        margin-right: 0;
+      }
+
+      /* Band 3 — disclaimer micro-band (always present) */
+      .footer-disclaimer {
+        background: #0a1020;
+        color: #9CA3AF;
+        padding: var(--space-3) var(--space-5);
+        font-size: 11px;
+        line-height: 1.5;
+        text-align: center;
+      }
+      .footer-disclaimer-inner {
+        max-width: 1000px;
+        margin: 0 auto;
+      }
+
+      /* Footer responsive */
+      @media (max-width: 780px) {
+        .footer-grid {
+          grid-template-columns: 1fr 1fr;
+          gap: var(--space-4);
+        }
+        .footer-brand {
+          grid-column: 1 / -1;
+        }
+        .footer-teaser h3 {
+          font-size: 24px;
+        }
+      }
+      @media (max-width: 520px) {
+        .footer-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
   </body>
 </html>
-
-<style is:global>
-  *,
-  *::before,
-  *::after {
-    box-sizing: border-box;
-  }
-  body {
-    margin: 0;
-    font-family: var(--font-body);
-    font-size: var(--type-body-size);
-    line-height: var(--type-body-lh);
-    color: var(--text-primary);
-    background: var(--bg-page);
-  }
-</style>
-
-<style>
-  .site-header {
-    padding: var(--space-3) var(--space-4);
-    border-bottom: 1px solid var(--border-default);
-  }
-  .brand {
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: var(--type-h2-size);
-    color: var(--text-heading);
-    text-decoration: none;
-    letter-spacing: -0.01em;
-  }
-  main {
-    max-width: var(--container-max);
-    margin: 0 auto;
-    padding: var(--space-6) var(--space-4);
-    min-height: 60vh;
-  }
-  .site-footer {
-    border-top: 1px solid var(--border-default);
-    padding: var(--space-4);
-    text-align: center;
-    color: var(--text-muted);
-    font-size: var(--type-caption-size);
-    line-height: var(--type-caption-lh);
-  }
-  .site-footer .disclaimer {
-    max-width: 60ch;
-    margin: 0 auto var(--space-1) auto;
-  }
-  .site-footer .copyright {
-    margin: 0;
-  }
-</style>

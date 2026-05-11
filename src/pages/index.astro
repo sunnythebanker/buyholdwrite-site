@@ -1,46 +1,482 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+const audiences = [
+  { num: '01', title: '401(k) Rollover', desc: 'Just left a job with $100K+ rolling over.' },
+  { num: '02', title: 'Self-Directed IRA', desc: 'Self-managing a $100K+ IRA.' },
+  { num: '03', title: 'NRA Investing', desc: 'Non-resident with a US brokerage account.' },
+];
 ---
 
 <BaseLayout
-  title="buyholdwrite.com — coming soon"
-  description="A finance blog for 401K rollovers, self-directed IRAs, and US investing for non-residents. Educational only — not financial advice. Site launching soon."
+  title="buyholdwrite.com — Educational content from a top 1% banker"
+  description="Educational content for 401K rollovers, self-directed IRAs, and US investing for non-residents. Bilingual coverage from a 9-year US bank veteran."
 >
-  <section class="hero">
-    <p class="eyebrow">buyholdwrite.com</p>
-    <h1>Site under construction.</h1>
-    <p class="lede">Educational content for 401K rollovers, self-directed IRAs, and US investing for non-residents — launching soon.</p>
+  <!-- Section 1: Hero -->
+  <section class="home-hero">
+    <div class="hero-text">
+      <h1>I was a top 1% banker and still lost most of my IRA gambling on tech stocks.</h1>
+      <p class="hero-sub">Now I teach 401K rollovers, self-directed IRAs, and US investing for non-residents. Bilingual. Educational only.</p>
+      <div class="hero-ctas">
+        <a class="btn-primary" href="/newsletter">Get the weekly newsletter →</a>
+        <a class="btn-secondary" href="/stack">What is STACK? →</a>
+      </div>
+    </div>
+    <div class="hero-photo">
+      <img src="/logos/stack-icon-light.svg" alt="" class="hero-photo-mark" />
+      <p class="hero-photo-text">Headshot coming soon</p>
+    </div>
+  </section>
+
+  <!-- Section 2: Three Audiences -->
+  <section class="audiences-band">
+    <div class="audiences-inner">
+      <h2 class="section-h2">Who this is for.</h2>
+      <div class="audience-cards">
+        {audiences.map(a => (
+          <a class="audience-card" href="/blog">
+            <span class="audience-num">{a.num}</span>
+            <h3>{a.title}</h3>
+            <p>{a.desc}</p>
+            <span class="audience-arrow">Read articles →</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 3: Recent posts (empty state until first article via Phase 5) -->
+  <section class="recent-band">
+    <div class="recent-head">
+      <h2 class="section-h2">Recent blog posts.</h2>
+      <a class="see-all" href="/blog">See all posts →</a>
+    </div>
+    <p class="recent-empty">First articles publishing soon — subscribe below for the launch issue.</p>
+  </section>
+
+  <!-- Section 4: About teaser -->
+  <section class="about-teaser-band">
+    <div class="about-teaser">
+      <div class="about-teaser-photo">
+        <div class="placeholder-mark">SS</div>
+      </div>
+      <div class="about-teaser-content">
+        <div class="eyebrow">About the author</div>
+        <h2>Sunny Sun</h2>
+        <p>Banker in the US. 9 years inside a top US bank. 9 years building a family flower business with my wife. Today I help people with 401K rollovers, self-directed IRAs, and US investing for non-residents.</p>
+        <a class="read-story" href="/about">Read my story →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 5: Newsletter signup block -->
+  <section class="newsletter-band">
+    <div class="signup-block">
+      <div class="eyebrow">The weekly STACK newsletter</div>
+      <h3>The weekly STACK newsletter. Free. Educational only.</h3>
+      <p class="sub">Every Friday: trade walk-through, market read, one banker insight.</p>
+      <form class="signup-row" action="/newsletter" method="get">
+        <input type="email" name="email" placeholder="name@example.com" aria-label="Email address" required />
+        <button type="submit">Subscribe →</button>
+      </form>
+    </div>
   </section>
 </BaseLayout>
 
 <style>
-  .hero {
-    text-align: center;
-    padding: var(--space-12) 0;
+  /* ===== Section 1: Hero ===== */
+  .home-hero {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: var(--space-6);
+    align-items: center;
+    padding: var(--space-12) var(--space-5);
+    max-width: 1200px;
+    margin: 0 auto;
   }
-  .eyebrow {
+  .home-hero h1 {
+    font-size: 56px;
+    line-height: 1.08;
+    color: var(--color-navy);
+    letter-spacing: -0.01em;
+    margin-bottom: var(--space-3);
+    text-wrap: balance;
+  }
+  .hero-sub {
+    font-size: 21px;
+    line-height: 1.5;
+    color: var(--color-text);
+    margin-bottom: var(--space-4);
+    max-width: 540px;
+  }
+  .hero-ctas {
+    display: flex;
+    gap: var(--space-3);
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .btn-primary {
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 15px;
+    background: var(--color-gold);
+    color: var(--color-navy);
+    border: 2px solid var(--color-gold);
+    padding: 14px 24px;
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    display: inline-block;
+    transition: background var(--dur-fast) var(--ease-base), color var(--dur-fast) var(--ease-base);
+  }
+  .btn-primary:hover {
+    background: transparent;
+    color: var(--color-navy);
+  }
+  .btn-secondary {
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--color-navy);
+    text-decoration: none;
+    border-bottom: 1.5px solid transparent;
+    padding: 14px 0;
+    transition: border-color var(--dur-fast) var(--ease-base);
+  }
+  .btn-secondary:hover {
+    border-bottom-color: var(--color-navy);
+  }
+  .hero-photo {
+    aspect-ratio: 4 / 5;
+    background: var(--color-navy);
+    border-radius: var(--radius-lg);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-3);
+  }
+  .hero-photo-mark {
+    width: 40%;
+    height: auto;
+  }
+  .hero-photo-text {
+    color: var(--color-warm-white);
+    font-family: var(--font-body);
+    font-size: 14px;
+    letter-spacing: 0.05em;
+    opacity: 0.72;
+    margin: 0;
+  }
+
+  /* ===== Section 2: Three Audiences ===== */
+  .audiences-band {
+    background: var(--bg-surface-alt);
+    padding: var(--space-12) var(--space-5);
+    border-top: 1px solid var(--border-default);
+    border-bottom: 1px solid var(--border-default);
+  }
+  .audiences-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .section-h2 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 1.15;
+    color: var(--color-navy);
+    margin-bottom: var(--space-5);
+    max-width: 680px;
+  }
+  .audience-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-3);
+  }
+  .audience-card {
+    background: #fff;
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-lg);
+    padding: var(--space-4);
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    box-shadow: var(--shadow-card);
+    transition: box-shadow var(--dur-base) var(--ease-base), transform var(--dur-base) var(--ease-base);
+  }
+  .audience-card:hover {
+    box-shadow: var(--shadow-card-hover);
+    transform: translateY(-2px);
+  }
+  .audience-num {
     font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--color-gold);
+    font-weight: 700;
+    letter-spacing: 0.15em;
+  }
+  .audience-card h3 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 1.2;
+    color: var(--color-navy);
+  }
+  .audience-card p {
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--text-primary);
+  }
+  .audience-arrow {
+    margin-top: auto;
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--color-navy);
+    border-top: 1px solid var(--border-default);
+    padding-top: var(--space-2);
+  }
+
+  /* ===== Section 3: Recent posts ===== */
+  .recent-band {
+    padding: var(--space-12) var(--space-5);
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .recent-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: var(--space-4);
+  }
+  .recent-head .section-h2 {
+    margin-bottom: 0;
+  }
+  .see-all {
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--color-navy);
+    text-decoration: none;
+    border-bottom: 1.5px solid var(--color-navy);
+    padding-bottom: 2px;
+  }
+  .recent-empty {
+    color: var(--text-muted);
+    font-size: 17px;
+    line-height: 1.6;
+    padding: var(--space-5) 0;
+    border-top: 1px solid var(--border-default);
+    border-bottom: 1px solid var(--border-default);
+    text-align: center;
+  }
+
+  /* ===== Section 4: About teaser ===== */
+  .about-teaser-band {
+    background: var(--color-charcoal);
+    color: var(--text-on-dark);
+    padding: var(--space-12) var(--space-5);
+  }
+  .about-teaser {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: var(--space-5);
+    align-items: center;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .about-teaser-photo {
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    overflow: hidden;
+    background: #1a2540;
+    border: 3px solid var(--color-gold);
+    position: relative;
+  }
+  .about-teaser-photo .placeholder-mark {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 60px;
+    color: var(--color-gold);
+    font-family: var(--font-display);
+    font-weight: 700;
+  }
+  .about-teaser-content .eyebrow {
+    font-size: 11px;
+    letter-spacing: var(--tracking-eyebrow);
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--color-gold);
+    margin-bottom: var(--space-2);
+  }
+  .about-teaser-content h2 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 1.2;
+    color: #fff;
+    margin-bottom: var(--space-2);
+  }
+  .about-teaser-content p {
+    font-size: 17px;
+    line-height: 1.55;
+    color: #D8DBE3;
+    max-width: 640px;
+    margin-bottom: var(--space-3);
+  }
+  .read-story {
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--color-gold);
+    text-decoration: none;
+    border-bottom: 1.5px solid var(--color-gold);
+    padding-bottom: 2px;
+  }
+
+  /* ===== Section 5: Newsletter signup block ===== */
+  .newsletter-band {
+    padding: var(--space-12) var(--space-5);
+    background: var(--bg-page);
+  }
+  .signup-block {
+    background: var(--bg-callout-navy);
+    padding: var(--space-5);
+    border-radius: var(--radius-lg);
+    max-width: 720px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .signup-block .eyebrow {
     font-size: 11px;
     letter-spacing: var(--tracking-eyebrow);
     color: var(--color-gold);
     text-transform: uppercase;
     font-weight: 700;
-    margin: 0 0 var(--space-2) 0;
+    margin-bottom: var(--space-1);
   }
-  .hero h1 {
+  .signup-block h3 {
     font-family: var(--font-display);
-    font-size: var(--type-hero-size);
-    line-height: var(--type-hero-lh);
-    color: var(--text-heading);
     font-weight: 700;
-    margin: 0 0 var(--space-3) 0;
+    font-size: 28px;
+    color: var(--color-navy);
+    line-height: 1.2;
+    margin-bottom: var(--space-1);
   }
-  .hero .lede {
-    font-family: var(--font-body);
-    font-size: 17px;
-    line-height: 1.6;
+  .signup-block .sub {
+    font-size: 16px;
     color: var(--text-muted);
-    max-width: 60ch;
+    margin-bottom: var(--space-3);
+  }
+  .signup-block .signup-row {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    max-width: 480px;
     margin: 0 auto;
+    flex-wrap: wrap;
+  }
+  .signup-block .signup-row input {
+    flex: 1;
+    min-width: 200px;
+    font-family: var(--font-body);
+    font-size: 15px;
+    padding: 12px 14px;
+    background: #fff;
+    color: var(--color-text);
+    border: 1px solid var(--border-input);
+    border-radius: var(--radius-md);
+  }
+  .signup-block .signup-row button {
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 14px;
+    background: var(--color-gold);
+    color: var(--color-navy);
+    border: 2px solid var(--color-gold);
+    padding: 12px 22px;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+  }
+
+  /* ===== Mobile (≤780px) ===== */
+  @media (max-width: 780px) {
+    .home-hero {
+      grid-template-columns: 1fr;
+      padding: var(--space-5) var(--space-3) var(--space-6);
+      gap: var(--space-3);
+    }
+    .home-hero h1 {
+      font-size: 34px;
+      line-height: 1.1;
+    }
+    .hero-sub {
+      font-size: 16px;
+    }
+    .hero-ctas {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .hero-ctas .btn-primary,
+    .hero-ctas .btn-secondary {
+      text-align: center;
+    }
+    .audiences-band {
+      padding: var(--space-6) var(--space-3);
+    }
+    .section-h2 {
+      font-size: 24px;
+      margin-bottom: var(--space-3);
+    }
+    .audience-cards {
+      grid-template-columns: 1fr;
+      gap: var(--space-2);
+    }
+    .recent-band {
+      padding: var(--space-6) var(--space-3);
+    }
+    .recent-head {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-2);
+    }
+    .about-teaser-band {
+      padding: var(--space-6) var(--space-3);
+    }
+    .about-teaser {
+      grid-template-columns: 1fr;
+      text-align: center;
+      gap: var(--space-3);
+    }
+    .about-teaser-photo {
+      width: 140px;
+      height: 140px;
+      margin: 0 auto;
+    }
+    .about-teaser-photo .placeholder-mark {
+      font-size: 42px;
+    }
+    .about-teaser-content h2 {
+      font-size: 24px;
+    }
+    .about-teaser-content p {
+      font-size: 16px;
+    }
+    .newsletter-band {
+      padding: var(--space-6) var(--space-3);
+    }
+    .signup-block {
+      padding: var(--space-4) var(--space-3);
+    }
+    .signup-block h3 {
+      font-size: 22px;
+    }
   }
 </style>
