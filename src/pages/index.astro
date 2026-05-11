@@ -1,0 +1,46 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="buyholdwrite.com — coming soon"
+  description="A finance blog for 401K rollovers, self-directed IRAs, and US investing for non-residents. Educational only — not financial advice. Site launching soon."
+>
+  <section class="hero">
+    <p class="eyebrow">buyholdwrite.com</p>
+    <h1>Site under construction.</h1>
+    <p class="lede">Educational content for 401K rollovers, self-directed IRAs, and US investing for non-residents — launching soon.</p>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    text-align: center;
+    padding: var(--space-12) 0;
+  }
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: var(--tracking-eyebrow);
+    color: var(--color-gold);
+    text-transform: uppercase;
+    font-weight: 700;
+    margin: 0 0 var(--space-2) 0;
+  }
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: var(--type-hero-size);
+    line-height: var(--type-hero-lh);
+    color: var(--text-heading);
+    font-weight: 700;
+    margin: 0 0 var(--space-3) 0;
+  }
+  .hero .lede {
+    font-family: var(--font-body);
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--text-muted);
+    max-width: 60ch;
+    margin: 0 auto;
+  }
+</style>

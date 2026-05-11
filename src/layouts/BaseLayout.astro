@@ -1,0 +1,90 @@
+---
+import '../styles/tokens.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'buyholdwrite.com',
+  description = 'Educational only — not financial advice.',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a href="/" class="brand">buyholdwrite.com</a>
+    </header>
+    <main>
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <p class="disclaimer">Educational only — not financial advice. Sunny Sun is not a registered investment advisor.</p>
+      <p class="copyright">© 2026 Sunny Sun</p>
+    </footer>
+  </body>
+</html>
+
+<style is:global>
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: var(--type-body-size);
+    line-height: var(--type-body-lh);
+    color: var(--text-primary);
+    background: var(--bg-page);
+  }
+</style>
+
+<style>
+  .site-header {
+    padding: var(--space-3) var(--space-4);
+    border-bottom: 1px solid var(--border-default);
+  }
+  .brand {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: var(--type-h2-size);
+    color: var(--text-heading);
+    text-decoration: none;
+    letter-spacing: -0.01em;
+  }
+  main {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: var(--space-6) var(--space-4);
+    min-height: 60vh;
+  }
+  .site-footer {
+    border-top: 1px solid var(--border-default);
+    padding: var(--space-4);
+    text-align: center;
+    color: var(--text-muted);
+    font-size: var(--type-caption-size);
+    line-height: var(--type-caption-lh);
+  }
+  .site-footer .disclaimer {
+    max-width: 60ch;
+    margin: 0 auto var(--space-1) auto;
+  }
+  .site-footer .copyright {
+    margin: 0;
+  }
+</style>

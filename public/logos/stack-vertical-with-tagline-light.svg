@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 250" width="800" height="250">
+
+<rect x="388.79" y="30.00" width="22.43" height="5.28" rx="2.64" fill="#C5A55A"></rect>
+<rect x="382.19" y="39.23" width="35.62" height="6.60" rx="3.30" fill="#1B2A4A" opacity="1.0"></rect>
+<rect x="374.94" y="49.79" width="50.13" height="7.26" rx="3.63" fill="#1B2A4A" opacity="0.72"></rect>
+<rect x="368.34" y="61.00" width="63.32" height="8.57" rx="4.29" fill="#1B2A4A" opacity="0.45"></rect>
+<rect x="362.40" y="73.53" width="75.19" height="9.23" rx="4.62" fill="#1B2A4A" opacity="0.25"></rect>
+<text x="400.0" y="150.0" text-anchor="middle" font-family="Georgia,&#39;Times New Roman&#39;,serif" font-size="80" font-weight="700" letter-spacing="12.0" fill="#1B2A4A">STACK</text>
+<text x="400.0" y="178.0" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="17.6" letter-spacing="5.3" fill="#6B7280">SELL THETA · ACCUMULATE · COMPOUND · KEEP</text>
+</svg>

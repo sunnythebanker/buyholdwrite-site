@@ -1,0 +1,187 @@
+/* ============================================================
+   STACK · buyholdwrite.com — Design Tokens (v1.0)
+   ============================================================
+   Single source of truth for color, type, spacing, radii,
+   shadows, breakpoints, and motion. Every value below must
+   round-trip cleanly between this file and Sunny's mockups.
+   ------------------------------------------------------------
+   Naming convention:
+     --color-*    palette hex
+     --bg-*       semantic background tokens
+     --text-*     semantic text tokens
+     --border-*   semantic border tokens
+     --space-*    8px-grid spacing scale (n = multiples of 8)
+     --radius-*   border-radius scale
+     --shadow-*   box-shadow elevations
+     --type-*     type roles (size + line-height)
+     --bp-*       breakpoint min-widths
+     --dur-*      transition durations
+     --ease-*     transition easing
+   ============================================================ */
+
+:root {
+  /* ---------- Brand palette (locked, Brand Guide §4) ---------- */
+  --color-navy:        #1B2A4A;   /* primary brand color, 50–60% */
+  --color-gold:        #C5A55A;   /* accent, CTAs, dividers, 5–10% — never as bg fill */
+  --color-charcoal:    #0F1729;   /* dark sections, footer band */
+  --color-warm-white:  #FAFAF8;   /* page background, NOT pure white */
+  --color-text:        #1A1A1A;   /* body text on light bg */
+  --color-gray:        #6B7280;   /* secondary text, captions, metadata */
+  --color-forest:      #2D6A4F;   /* positive / success — sparingly */
+  --color-crimson:     #9B2226;   /* warning / error — sparingly */
+
+  /* Surfaces derived from palette (used in cards, callouts, table zebra) */
+  --color-light-bg:    #F5F5F2;   /* light surface — table zebra, callout bg */
+  --color-mid-bg:      #E8E8E5;   /* mid surface — disabled fields */
+  --color-hairline:    #E5E5E2;   /* 1px borders, dividers */
+
+  /* ---------- Semantic background tokens ---------- */
+  --bg-page:           var(--color-warm-white);
+  --bg-surface:        #FFFFFF;            /* cards, callouts on warm-white pages */
+  --bg-surface-alt:    var(--color-light-bg);
+  --bg-dark:           var(--color-charcoal);
+  --bg-navy:           var(--color-navy);
+  --bg-callout-navy:   #EEF1F7;            /* light-navy callout background, ~6% navy on warm-white */
+  --bg-disabled:       var(--color-mid-bg);
+
+  /* ---------- Semantic text tokens ---------- */
+  --text-primary:      var(--color-text);   /* body */
+  --text-heading:      var(--color-navy);   /* H1, H2 */
+  --text-h3:           var(--color-text);   /* H3 sits darker than H2 hue per brief */
+  --text-muted:        var(--color-gray);   /* captions, meta, footer */
+  --text-on-dark:      var(--color-warm-white);
+  --text-link:         var(--color-navy);
+  --text-link-hover:   var(--color-navy);   /* color stays; underline appears on hover */
+  --text-error:        var(--color-crimson);
+  --text-success:      var(--color-forest);
+
+  /* ---------- Semantic border tokens ---------- */
+  --border-default:    var(--color-hairline);
+  --border-input:      var(--color-gray);
+  --border-input-focus:var(--color-gold);
+  --border-error:      var(--color-crimson);
+  --border-success:    var(--color-forest);
+  --border-accent:     var(--color-gold);   /* gold left rule on callouts/quotes */
+
+  /* ---------- 8px spacing scale (Brief §8.1) ----------
+     n = multiplier × 8px. Use only these values. */
+  --space-0:    0;
+  --space-1:    8px;
+  --space-2:   16px;
+  --space-3:   24px;
+  --space-4:   32px;
+  --space-5:   40px;
+  --space-6:   48px;
+  --space-8:   64px;
+  --space-12:  96px;
+  --space-16: 128px;
+
+  /* ---------- Radius scale (Brief §8.4) ---------- */
+  --radius-pill:    9999px;     /* category tags */
+  --radius-sm:      4px;        /* small inputs, micro-pills */
+  --radius-md:      6px;        /* buttons */
+  --radius-lg:      8px;        /* cards, blocks, callouts */
+  --radius-circle:  50%;        /* avatars */
+
+  /* ---------- Stroke widths ---------- */
+  --stroke-hairline: 1px;
+  --stroke-rule:     2px;       /* gold underlines, focus ring weight */
+  --stroke-accent:   3px;       /* gold left border on callouts */
+  --stroke-progress: 3px;       /* reading progress bar height */
+
+  /* ---------- Elevation (mechanical, no animation curve) ---------- */
+  --shadow-none:     none;
+  --shadow-card:     0 1px 2px rgba(27, 42, 74, 0.04),
+                     0 2px 4px rgba(27, 42, 74, 0.04);
+  --shadow-card-hover:
+                     0 4px 12px rgba(27, 42, 74, 0.10),
+                     0 1px 2px rgba(27, 42, 74, 0.06);
+  --shadow-nav-stuck: 0 1px 0 rgba(27, 42, 74, 0.06),
+                      0 2px 6px rgba(27, 42, 74, 0.04);
+
+  /* Focus ring — visible on every interactive element */
+  --focus-ring:      0 0 0 3px rgba(197, 165, 90, 0.45);
+  --focus-ring-on-gold:
+                     0 0 0 3px rgba(27, 42, 74, 0.55);
+
+  /* ---------- Type families (Brief §2.2 / Brand Guide §5) ---------- */
+  --font-display:    Georgia, "Times New Roman", serif;
+  --font-body:       Arial, "Helvetica Neue", Helvetica, sans-serif;
+  --font-mono:       "Courier New", Courier, monospace;
+  /* OG-image-only — bundled at build time inside satori, never on the live site */
+  --font-og-display: "Source Serif 4", Georgia, serif;
+  --font-og-body:    "Source Sans 3", Arial, sans-serif;
+
+  /* ---------- Type roles — ranges are min/max; values are the desktop default ---------- */
+  --type-hero-size:        56px;   /* range 48–64; mobile clamps to 36px */
+  --type-hero-lh:          1.1;
+  --type-h1-size:          36px;   /* range 32–40 */
+  --type-h1-lh:            1.15;
+  --type-h2-size:          26px;   /* range 24–28 */
+  --type-h2-lh:            1.25;
+  --type-h3-size:          21px;   /* range 20–22 */
+  --type-h3-lh:            1.3;
+  --type-body-size:        17px;   /* range 16–18 */
+  --type-body-lh:          1.6;
+  --type-article-size:     18px;   /* article body — 1.6–1.8 lh */
+  --type-article-lh:       1.7;
+  --type-pullquote-size:   20px;
+  --type-pullquote-lh:     1.5;
+  --type-caption-size:     13px;   /* range 13–14 */
+  --type-caption-lh:       1.5;
+  --type-data-size:        14px;   /* Courier — 14–15 */
+  --type-data-lh:          1.55;
+
+  /* Letter-spacing for tracked-out labels (the only place we space-out type) */
+  --tracking-eyebrow:      0.18em; /* small caps section labels */
+  --tracking-pill:         0.06em; /* category pills */
+
+  /* ---------- Layout containers (Brief §8.3) ---------- */
+  --container-max:         1200px;  /* site content max */
+  --container-article:      680px;  /* blog article body — DO NOT widen */
+  --container-newsletter:   600px;  /* newsletter signup block */
+  --container-privacy:      720px;
+
+  /* ---------- Breakpoints (mobile-first, Brief §8.2) ---------- */
+  --bp-tablet:   768px;
+  --bp-desktop: 1024px;
+  --bp-wide:    1280px;
+  /* Mockup viewports: mobile = 375px, desktop = 1440px */
+
+  /* ---------- Motion (mechanical only, Brief §8.5) ---------- */
+  --dur-instant:  0ms;
+  --dur-fast:    120ms;     /* color, border shifts */
+  --dur-base:    200ms;     /* default transitions */
+  --ease-base:   ease;      /* no custom curves — feels mechanical, not animated */
+
+  /* ---------- Sticky nav scroll-threshold (LOCKED) ---------- */
+  --nav-scroll-threshold: 64px;   /* shadow appears once scrollY > 64 */
+
+  /* ---------- Reading progress bar ---------- */
+  --progress-height: var(--stroke-progress);
+  --progress-color:  var(--color-gold);
+  --progress-track:  transparent;
+
+  /* ---------- OG Image template (LOCKED, Brief §4.9) ---------- */
+  --og-canvas-w:          1200px;
+  --og-canvas-h:           630px;
+  --og-padding-x:          88px;       /* horizontal padding */
+  --og-padding-y:          80px;       /* vertical padding */
+  --og-bg:                 var(--color-navy);
+  --og-title-color:        var(--color-warm-white);
+  --og-title-size:         68px;       /* validated to fit 50–80 char titles in 3 lines */
+  --og-title-lh:           1.15;
+  --og-title-weight:       700;
+  --og-title-max-lines:    3;
+  --og-subtitle-color:     #9CA3AF;    /* slightly lighter gray for dark-bg legibility */
+  --og-subtitle-size:      22px;
+  --og-accent-stroke:      4px;        /* gold accent line height */
+  --og-accent-width:       96px;       /* short rule, sits above title */
+  --og-accent-x:           88px;       /* matches --og-padding-x */
+  --og-accent-y:           64px;       /* from top — locked horizontal-top orientation */
+  --og-badge-size:         96px;       /* stack-icon-dark.svg — render at 96×96 */
+  --og-badge-pad:          48px;       /* from corner edge */
+  --og-badge-corner:       bottom-right; /* LOCKED — do not vary across articles */
+  --og-pill-bg:            var(--color-gold);
+  --og-pill-text:          var(--color-navy);
+}
