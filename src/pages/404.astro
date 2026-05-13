@@ -1,0 +1,81 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Page not found — buyholdwrite.com"
+  description="The page you're looking for isn't here. Here's where to go instead."
+  showFooterTeaser={false}
+>
+  <section class="not-found">
+    <h1>This page got rolled to a different strike.</h1>
+    <p class="not-found-sub">The page you're looking for isn't here. Here's where to go instead.</p>
+    <p class="not-found-links">
+      <a href="/">Home</a>
+      <span class="sep" aria-hidden="true">·</span>
+      <a href="/blog">Blog</a>
+      <span class="sep" aria-hidden="true">·</span>
+      <a href="/newsletter">Newsletter</a>
+    </p>
+  </section>
+</BaseLayout>
+
+<style>
+  .not-found {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: var(--space-12) var(--space-5);
+    text-align: center;
+  }
+  .not-found h1 {
+    font-family: var(--font-display);
+    /* between article hero and page hero — 404 headline deserves to land */
+    font-size: 64px;
+    line-height: var(--type-hero-lh);
+    color: var(--color-navy);
+    margin: 0 0 var(--space-4);
+  }
+  .not-found-sub {
+    font-family: var(--font-body);
+    font-size: var(--type-article-size);
+    line-height: var(--type-article-lh);
+    color: var(--text-muted);
+    margin: 0 0 var(--space-3);
+  }
+  .not-found-links {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: var(--type-body-size);
+  }
+  .not-found-links a {
+    font-weight: 600;
+    color: var(--color-navy);
+    text-decoration: none;
+    padding: 8px 4px;
+  }
+  .not-found-links a:hover {
+    text-decoration: underline;
+    text-decoration-color: var(--color-gold);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+  }
+  .not-found-links .sep {
+    color: var(--text-muted);
+    margin: 0 var(--space-1);
+    user-select: none;
+  }
+
+  /* Mobile ≤780px */
+  @media (max-width: 780px) {
+    .not-found {
+      padding: var(--space-8) var(--space-3);
+    }
+    .not-found h1 {
+      font-size: 36px;
+      line-height: 1.1;
+    }
+    .not-found-sub {
+      font-size: 16px;
+    }
+  }
+</style>
