@@ -96,8 +96,7 @@ const qqqBullets = [
   <!-- Section 5: Trade log CTA -->
   <section class="tradelog-band">
     <p class="tradelog-lede">Every trade is logged the day it happens. Wins, losses, and the boring weeks that make up most of the strategy — all of it, all timestamped.</p>
-    <button type="button" disabled class="tradelog-cta">See my live trade log →</button>
-    <p class="tradelog-note">[link wires when sheet is public]</p>
+    <a class="tradelog-cta" href="https://docs.google.com/spreadsheets/d/1S6AjotRWtEvqR6YmdsDQhaVb6soeIN3cTdEtbV-l1Eo/view" target="_blank" rel="noopener noreferrer">See my live trade log →</a>
   </section>
 
   <!-- Section 6: Is STACK right for you (audience-fit grid) -->
@@ -348,19 +347,8 @@ const qqqBullets = [
     border: 2px solid var(--color-gold);
     padding: 14px 28px;
     border-radius: var(--radius-md);
+    text-decoration: none;
     cursor: pointer;
-  }
-  .tradelog-cta:disabled {
-    opacity: 0.55;
-    cursor: not-allowed;
-  }
-  .tradelog-note {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 0.12em;
-    color: rgba(255, 255, 255, 0.55);
-    margin-top: var(--space-2);
-    text-transform: uppercase;
   }
 
   /* ===== Section 6: Is STACK right for you ===== */
