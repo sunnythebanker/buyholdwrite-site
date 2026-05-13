@@ -1,0 +1,5 @@
+# 301 redirect config. Format: <from> <to> <status>
+# One redirect per line. Lines starting with # are comments.
+# Example: /old-slug /new-slug 301
+# Cloudflare Pages docs: https://developers.cloudflare.com/pages/configuration/redirects/
+# Intentionally empty — add redirects here when content URLs change.
