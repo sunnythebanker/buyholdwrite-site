@@ -238,9 +238,9 @@ const websiteSchema = {
       .site-header {
         background: #fff;
         height: 72px;
-        display: flex;
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
         align-items: center;
-        justify-content: space-between;
         padding: 0 var(--space-5);
         position: sticky;
         top: 0;
@@ -254,6 +254,7 @@ const websiteSchema = {
       .nav-logo {
         display: block;
         text-decoration: none;
+        justify-self: start;
       }
       .nav-logo img {
         height: 36px;
@@ -300,9 +301,17 @@ const websiteSchema = {
         color: var(--color-navy);
       }
 
+      /* Anchor desktop subscribe button to the right column of the header grid.
+         Mobile-menu variant (.nav-cta inside .mobile-menu) is unaffected. */
+      .nav-cta-desktop {
+        justify-self: end;
+      }
+
       /* Hamburger - hidden on desktop */
       .hamburger {
         display: none;
+        grid-column: 3;
+        justify-self: end;
         width: 36px;
         height: 36px;
         background: transparent;
