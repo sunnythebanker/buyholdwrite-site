@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import NewsletterSignup from '../components/NewsletterSignup.astro';
 ---
 
 <BaseLayout
@@ -56,15 +57,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
   <!-- Section 5: Newsletter signup (mirrors Home Section 5; consolidate to component at 3rd occurrence) -->
   <section class="newsletter-band">
-    <div class="signup-block">
-      <div class="eyebrow">The weekly STACK newsletter</div>
-      <h3>The weekly STACK newsletter. Free. Educational only.</h3>
-      <p class="sub">Every Friday: trade walk-through, market read, one banker insight.</p>
-      <form class="signup-row" action="/newsletter" method="get">
-        <input type="email" name="email" placeholder="name@example.com" aria-label="Email address" required />
-        <button type="submit">Subscribe →</button>
-      </form>
-    </div>
+    <NewsletterSignup />
   </section>
 </BaseLayout>
 
@@ -199,65 +192,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     padding: var(--space-12) var(--space-5);
     background: var(--bg-page);
   }
-  .signup-block {
-    background: var(--bg-callout-navy);
-    padding: var(--space-5);
-    border-radius: var(--radius-lg);
-    max-width: 720px;
-    margin: 0 auto;
-    text-align: center;
-  }
-  .signup-block .eyebrow {
-    font-size: 11px;
-    letter-spacing: var(--tracking-eyebrow);
-    color: var(--color-gold);
-    text-transform: uppercase;
-    font-weight: 700;
-    margin-bottom: var(--space-1);
-  }
-  .signup-block h3 {
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 28px;
-    color: var(--color-navy);
-    line-height: 1.2;
-    margin-bottom: var(--space-1);
-  }
-  .signup-block .sub {
-    font-size: 16px;
-    color: var(--text-muted);
-    margin-bottom: var(--space-3);
-  }
-  .signup-block .signup-row {
-    display: flex;
-    gap: 8px;
-    justify-content: center;
-    max-width: 480px;
-    margin: 0 auto;
-    flex-wrap: wrap;
-  }
-  .signup-block .signup-row input {
-    flex: 1;
-    min-width: 200px;
-    font-family: var(--font-body);
-    font-size: 15px;
-    padding: 12px 14px;
-    background: #fff;
-    color: var(--color-text);
-    border: 1px solid var(--border-input);
-    border-radius: var(--radius-md);
-  }
-  .signup-block .signup-row button {
-    font-family: var(--font-body);
-    font-weight: 700;
-    font-size: 14px;
-    background: var(--color-gold);
-    color: var(--color-navy);
-    border: 2px solid var(--color-gold);
-    padding: 12px 22px;
-    border-radius: var(--radius-md);
-    cursor: pointer;
-  }
 
   /* ===== Mobile (≤780px) ===== */
   @media (max-width: 780px) {
@@ -304,12 +238,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     }
     .newsletter-band {
       padding: var(--space-6) var(--space-3);
-    }
-    .signup-block {
-      padding: var(--space-4) var(--space-3);
-    }
-    .signup-block h3 {
-      font-size: 22px;
     }
   }
 </style>
