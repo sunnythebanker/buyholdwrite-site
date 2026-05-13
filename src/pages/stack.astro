@@ -1,33 +1,561 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import NewsletterSignup from '../components/NewsletterSignup.astro';
+
+const pillars = [
+  {
+    num: '01 · Foundation',
+    title: 'Buy & Hold',
+    draft: 'The foundation. Accumulate QQQ shares as a long-term core position. Never sell.',
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="14" width="18" height="3" rx="1"/><rect x="5" y="9" width="14" height="3" rx="1"/><rect x="7" y="4" width="10" height="3" rx="1"/></svg>',
+  },
+  {
+    num: '02 · Income',
+    title: 'Write Weekly Calls',
+    draft: 'The income engine. Sell weekly call options against the position to generate premium.',
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/><path d="M19 4l2 2-2 2"/></svg>',
+  },
+  {
+    num: '03 · Discipline',
+    title: 'Manage the Position',
+    draft: 'Take profit at 70-80%. Roll ITM positions one day before expiration. Never accept assignment.',
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 12l5-3"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg>',
+  },
+  {
+    num: '04 · Compounding',
+    title: 'Progressive DCA',
+    draft: 'Reinvest premium into more shares. The further the market drops, the more we buy.',
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v10"/><path d="M7 9l5 5 5-5"/><rect x="4" y="17" width="16" height="3" rx="1"/></svg>',
+  },
+];
+
+const qqqBullets = [
+  { num: '01', draft: 'Proven compounder' },
+  { num: '02', draft: 'Rich option premiums' },
+  { num: '03', draft: 'Diversified across 100 companies' },
+  { num: '04', draft: 'Daily option liquidity' },
+];
 ---
 
 <BaseLayout
   title="STACK methodology — buyholdwrite.com"
-  description="The STACK covered-call methodology — coming soon."
+  description="The STACK covered-call methodology — a weekly framework on QQQ. Premium reinvested into more shares. Educational only."
 >
-  <section class="placeholder">
-    <h1>STACK</h1>
-    <p>Coming soon — full STACK methodology page publishing alongside v1 launch.</p>
+  <!-- Section 1: Hero -->
+  <section class="stack-hero">
+    <h1>STACK: <span class="accent">Sell Theta.</span> Accumulate. Compound. Keep.</h1>
+    <p class="hero-sub">A weekly covered-call framework on QQQ. Premium reinvested into more shares. The goal is share count, not share price.</p>
+  </section>
+
+  <!-- Section 2: Philosophy callout (Brief §4 Page 3 §2 verbatim) -->
+  <section class="philosophy-band">
+    <p class="philosophy-callout">
+      "Owning a bigger piece of the pie is the most important part of total return."
+    </p>
+  </section>
+
+  <!-- Section 3: Four Pillars -->
+  <section class="pillars-band">
+    <div class="pillars-inner">
+      <div class="pillars-head">
+        <div class="section-eyebrow">The methodology</div>
+        <h2 class="section-h2">The Four Pillars.</h2>
+      </div>
+      <div class="pillars-grid">
+        {pillars.map(p => (
+          <article class="pillar-card">
+            <div class="pillar-num">{p.num}</div>
+            <div class="pillar-icon" aria-hidden="true" set:html={p.icon} />
+            <h3 class="pillar-title">{p.title}</h3>
+            <p class="pillar-desc placeholder">[Sunny writes — draft: "{p.draft}"]</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 4: Why QQQ -->
+  <section class="qqq-band">
+    <div class="qqq-inner">
+      <div class="qqq-text">
+        <div class="section-eyebrow">The vehicle</div>
+        <h2 class="section-h2">Why QQQ.</h2>
+        <p class="qqq-intro placeholder">[— Sunny writes the Why-QQQ intro paragraph]</p>
+      </div>
+      <div class="qqq-bullets">
+        {qqqBullets.map(b => (
+          <div class="qqq-bullet">
+            <div class="num">{b.num}</div>
+            <div class="label placeholder">[Sunny writes — draft: "{b.draft}"]</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 5: Trade log CTA -->
+  <section class="tradelog-band">
+    <p class="tradelog-lede placeholder">[— Sunny writes the trade-log lead-in]</p>
+    <button type="button" disabled class="tradelog-cta">See my live trade log →</button>
+    <p class="tradelog-note">[link wires when sheet is public]</p>
+  </section>
+
+  <!-- Section 6: Is STACK right for you (audience-fit grid) -->
+  <section class="teach-band">
+    <div class="teach-inner">
+      <div class="teach-head">
+        <div class="section-eyebrow">The fit test</div>
+        <h2 class="section-h2">Is STACK right for you.</h2>
+      </div>
+      <div class="teach-grid">
+        <div class="teach-col">
+          <h3>Who STACK is for.</h3>
+          <ul>
+            <li><span class="mark" aria-hidden="true">→</span><span>401(k) Rollovers</span></li>
+            <li><span class="mark" aria-hidden="true">→</span><span>Self-Directed IRAs</span></li>
+            <li><span class="mark" aria-hidden="true">→</span><span>NRA Investing</span></li>
+          </ul>
+        </div>
+        <div class="teach-col not-for">
+          <h3>Who STACK isn't for.</h3>
+          <ul>
+            <li><span class="mark" aria-hidden="true">✕</span><span>People with under $50K in their IRA</span></li>
+            <li><span class="mark" aria-hidden="true">✕</span><span>People who can't watch markets 30 min/day</span></li>
+            <li><span class="mark" aria-hidden="true">✕</span><span>People emotionally tied to outperforming</span></li>
+            <li><span class="mark" aria-hidden="true">✕</span><span>People who need passive income now</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 7: Amplified disclaimer (matches BaseLayout footer disclaimer) -->
+  <section class="amplified-disclaimer-band">
+    <div class="amplified-disclaimer">
+      <div class="label">Important · Educational only</div>
+      Educational only — not financial advice. Sunny Sun is not a registered investment advisor. The information presented on this site is for educational purposes only and does not constitute investment advice, financial advice, or any other type of advice. Always consult with a qualified professional before making investment decisions.
+    </div>
+  </section>
+
+  <!-- Section 8: Newsletter signup (page-specific space-8 band per spec line 216) -->
+  <section class="newsletter-band">
+    <NewsletterSignup />
   </section>
 </BaseLayout>
 
 <style>
-  .placeholder {
-    max-width: 720px;
+  /* ===== Section 1: Hero ===== */
+  .stack-hero {
+    padding: var(--space-12) var(--space-5) var(--space-8);
+    max-width: 1200px;
     margin: 0 auto;
-    padding: var(--space-12) var(--space-5);
     text-align: center;
   }
-  .placeholder h1 {
-    font-size: var(--type-h1-size);
-    line-height: var(--type-h1-lh);
+  .stack-hero h1 {
+    /* spec value; no matching token (--type-hero-size is 56px) */
+    font-size: 72px;
+    line-height: 1.05;
+    color: var(--color-navy);
+    letter-spacing: -0.02em;
+    margin-bottom: var(--space-3);
+    text-wrap: balance;
+  }
+  .stack-hero h1 .accent {
+    color: var(--color-gold);
+  }
+  .hero-sub {
+    font-size: 21px;
+    line-height: 1.5;
+    color: var(--text-muted);
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  /* ===== Section 2: Philosophy callout ===== */
+  .philosophy-band {
+    padding: 0 var(--space-5);
+  }
+  .philosophy-callout {
+    max-width: 880px;
+    margin: var(--space-8) auto;
+    padding: var(--space-5);
+    border-left: 4px solid var(--color-gold);
+    background: var(--bg-surface);
+    font-family: var(--font-display);
+    font-style: italic;
+    /* spec value; no matching token */
+    font-size: 24px;
+    line-height: 1.4;
+    color: var(--color-navy);
+  }
+
+  /* ===== Section 3: Four Pillars ===== */
+  .pillars-band {
+    padding: var(--space-12) var(--space-5);
+    background: var(--bg-surface-alt);
+  }
+  .pillars-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .pillars-head {
+    margin-bottom: var(--space-5);
+  }
+  .section-eyebrow {
+    font-size: 11px;
+    letter-spacing: var(--tracking-eyebrow);
+    color: var(--color-gold);
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: var(--space-1);
+  }
+  .section-h2 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    /* spec value; no matching token */
+    font-size: 44px;
+    line-height: 1.1;
+    color: var(--color-navy);
+    margin-bottom: var(--space-3);
+    letter-spacing: -0.01em;
+  }
+  .pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-3);
+  }
+  .pillar-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-lg);
+    padding: var(--space-4);
+    display: flex;
+    flex-direction: column;
+  }
+  .pillar-num {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--color-gold);
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: var(--space-2);
+  }
+  .pillar-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-md);
+    background: rgba(197, 165, 90, 0.14);
+    color: var(--color-gold);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: var(--space-3);
+  }
+  .pillar-icon :global(svg) {
+    width: 26px;
+    height: 26px;
+  }
+  .pillar-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    /* spec value; no matching token */
+    font-size: 22px;
+    line-height: 1.2;
+    color: var(--color-navy);
+    margin-bottom: var(--space-2);
+  }
+  .pillar-desc {
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--text-primary);
+  }
+
+  /* ===== Section 4: Why QQQ ===== */
+  .qqq-band {
+    padding: var(--space-12) var(--space-5);
+    background: var(--bg-page);
+  }
+  .qqq-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: var(--space-6);
+    align-items: start;
+  }
+  .qqq-intro {
+    color: var(--text-muted);
+    font-size: 16px;
+    line-height: 1.6;
+    max-width: 420px;
+  }
+  .qqq-bullets {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  .qqq-bullet {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3);
+    background: var(--bg-surface);
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-md);
+  }
+  .qqq-bullet .num {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--color-gold);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    flex: 0 0 32px;
+  }
+  .qqq-bullet .label {
+    font-family: var(--font-display);
+    font-weight: 700;
+    /* spec value; no matching token */
+    font-size: 20px;
+    color: var(--color-navy);
+    line-height: 1.2;
+  }
+
+  /* ===== Section 5: Trade log CTA ===== */
+  .tradelog-band {
+    padding: var(--space-8) var(--space-5);
+    text-align: center;
+    background: var(--color-navy);
+    color: #fff;
+  }
+  .tradelog-lede {
+    font-family: var(--font-display);
+    /* spec value; no matching token */
+    font-size: 24px;
+    color: #fff;
+    margin: 0 auto var(--space-3);
+    max-width: 680px;
+    line-height: 1.4;
+  }
+  .tradelog-cta {
+    display: inline-block;
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 16px;
+    background: var(--color-gold);
+    color: var(--color-navy);
+    border: 2px solid var(--color-gold);
+    padding: 14px 28px;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+  }
+  .tradelog-cta:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+  .tradelog-note {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: rgba(255, 255, 255, 0.55);
+    margin-top: var(--space-2);
+    text-transform: uppercase;
+  }
+
+  /* ===== Section 6: Is STACK right for you ===== */
+  .teach-band {
+    padding: var(--space-12) var(--space-5);
+    background: var(--bg-surface-alt);
+  }
+  .teach-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .teach-head {
+    margin-bottom: var(--space-4);
+  }
+  .teach-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-5);
+  }
+  .teach-col {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-lg);
+    padding: var(--space-4);
+  }
+  .teach-col h3 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    /* spec value */
+    font-size: 24px;
     color: var(--color-navy);
     margin-bottom: var(--space-3);
   }
-  .placeholder p {
+  .teach-col ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  .teach-col li {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-2);
+    /* spec value; no matching token (--type-body-size is 17px) */
+    font-size: 15px;
+    line-height: 1.5;
+  }
+  .teach-col .mark {
+    flex: 0 0 20px;
+    color: var(--color-gold);
+    font-weight: 700;
+  }
+  .teach-col.not-for .mark {
+    color: var(--color-crimson);
+  }
+
+  /* ===== Section 7: Amplified disclaimer ===== */
+  .amplified-disclaimer-band {
+    padding: 0 var(--space-5);
+  }
+  .amplified-disclaimer {
+    max-width: 880px;
+    margin: var(--space-8) auto var(--space-12);
+    padding: var(--space-4) var(--space-5);
+    border-left: 6px solid var(--color-crimson);
+    background: var(--bg-surface);
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--text-primary);
+  }
+  .amplified-disclaimer .label {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.22em;
+    color: var(--color-crimson);
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: var(--space-1);
+  }
+
+  /* ===== Section 8: Newsletter signup (STACK uses space-8, NOT space-12 per spec) ===== */
+  .newsletter-band {
+    padding: var(--space-8) var(--space-5);
+    background: var(--bg-page);
+  }
+
+  /* ===== Visible-bracket placeholder treatment (per session decisions b + c) ===== */
+  .placeholder {
     color: var(--text-muted);
-    font-size: 17px;
-    line-height: 1.6;
+    font-style: italic;
+  }
+
+  /* ===== Mobile (≤780px) — values from spec §B mobile mockup ===== */
+  @media (max-width: 780px) {
+    .stack-hero {
+      padding: var(--space-5) var(--space-3) var(--space-4);
+    }
+    .stack-hero h1 {
+      /* spec mobile value */
+      font-size: 38px;
+      line-height: 1.05;
+    }
+    .hero-sub {
+      font-size: 16px;
+    }
+    .philosophy-band {
+      padding: 0 var(--space-3);
+    }
+    .philosophy-callout {
+      margin: var(--space-4) auto;
+      padding: var(--space-3);
+      /* spec mobile value */
+      font-size: 18px;
+    }
+    .pillars-band {
+      padding: var(--space-5) var(--space-3);
+    }
+    .section-h2 {
+      /* spec mobile value */
+      font-size: 28px;
+      margin-bottom: var(--space-3);
+    }
+    .pillars-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-2);
+    }
+    .pillar-card {
+      padding: var(--space-3);
+    }
+    .pillar-icon {
+      width: 40px;
+      height: 40px;
+      margin-bottom: var(--space-2);
+    }
+    .pillar-icon :global(svg) {
+      width: 22px;
+      height: 22px;
+    }
+    .pillar-title {
+      /* spec mobile value */
+      font-size: 18px;
+      margin-bottom: 6px;
+    }
+    .qqq-band {
+      padding: var(--space-5) var(--space-3);
+    }
+    .qqq-inner {
+      grid-template-columns: 1fr;
+      gap: var(--space-4);
+    }
+    .qqq-bullet .label {
+      /* spec mobile value */
+      font-size: 16px;
+    }
+    .tradelog-band {
+      padding: var(--space-5) var(--space-3);
+    }
+    .tradelog-lede {
+      /* spec mobile value */
+      font-size: 18px;
+    }
+    .tradelog-cta {
+      font-size: 14px;
+      padding: 12px 20px;
+    }
+    .teach-band {
+      padding: var(--space-5) var(--space-3);
+    }
+    .teach-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-3);
+    }
+    .teach-col {
+      padding: var(--space-3);
+    }
+    .teach-col h3 {
+      font-size: 20px;
+      margin-bottom: var(--space-2);
+    }
+    .teach-col li {
+      font-size: 14px;
+    }
+    .amplified-disclaimer-band {
+      padding: 0 var(--space-3);
+    }
+    .amplified-disclaimer {
+      margin: var(--space-4) auto var(--space-6);
+      padding: var(--space-3);
+      border-left-width: 5px;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+    .newsletter-band {
+      padding: var(--space-4) var(--space-3);
+    }
   }
 </style>
