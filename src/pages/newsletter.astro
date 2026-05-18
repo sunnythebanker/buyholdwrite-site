@@ -4,30 +4,265 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 <BaseLayout
   title="Newsletter — buyholdwrite.com"
-  description="The weekly STACK newsletter — coming soon."
+  description="Every Friday: trade walk-through, market read, one lesson from 9 years inside a top US bank. Free."
+  canonicalPath="/newsletter"
 >
-  <section class="placeholder">
-    <h1>Newsletter</h1>
-    <p>Coming soon — newsletter signup publishing alongside v1 launch.</p>
+  <!-- Section 1: Hero -->
+  <section class="nl-hero">
+    <h1>The Weekly STACK Newsletter.</h1>
+    <p class="hero-sub">Every Friday: trade walk-through, market read, one lesson from 9 years inside a top US bank.</p>
+  </section>
+
+  <!-- Section 2: What you'll get — 4 bullets with inline SVG icons (copied verbatim from design spec 05-tier1-batch-b.html) -->
+  <section class="nl-bullets-band">
+    <div class="nl-bullets-inner">
+      <div class="nl-bullets-head">
+        <h2>What you'll get.</h2>
+      </div>
+      <div class="nl-bullets-grid">
+        <div class="nl-bullet">
+          <div class="nl-bullet-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 18l5-6 4 3 7-9"/><path d="M3 21h18"/></svg>
+          </div>
+          <div class="nl-bullet-text">Weekly trade log walk-through</div>
+        </div>
+        <div class="nl-bullet">
+          <div class="nl-bullet-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5h16v11H8l-4 4z"/><path d="M8 9h8M8 12h5"/></svg>
+          </div>
+          <div class="nl-bullet-text">Market commentary in plain English</div>
+        </div>
+        <div class="nl-bullet">
+          <div class="nl-bullet-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 016 6c0 3-2 4.5-3 6H9c-1-1.5-3-3-3-6a6 6 0 016-6z"/></svg>
+          </div>
+          <div class="nl-bullet-text">One banker insight per issue</div>
+        </div>
+        <div class="nl-bullet">
+          <div class="nl-bullet-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8l1.5 1.5L13 7M9 13l1.5 1.5L13 12M9 18h5"/></svg>
+          </div>
+          <div class="nl-bullet-text">401K rollover, IRA, and NRA tips</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 3: Beehiiv signup form + social proof (form is THE focal point; no surrounding decoration per Build_01 §Page4) -->
+  <section class="nl-form-band">
+    <div class="nl-form-inner">
+      <!-- BEEHIIV EMBED — paste embed code from Beehiiv dashboard > Subscribe forms before launch. v1 placeholder below. -->
+      <form class="nl-form" onsubmit="return false;">
+        <input type="email" placeholder="name@example.com" aria-label="Email address" />
+        <button type="submit">Subscribe</button>
+      </form>
+      <div class="nl-social-proof">Join our earliest readers.</div>
+    </div>
+  </section>
+
+  <!-- Section 4: Amplified disclaimer (markup + CSS pattern duplicated from stack.astro:131-137 per consistency rule) -->
+  <section class="amplified-disclaimer-band">
+    <div class="amplified-disclaimer">
+      <div class="label">Important · Educational only</div>
+      Educational only — not financial advice. Sunny Sun is not a registered investment advisor. The information presented on this site is for educational purposes only and does not constitute investment advice, financial advice, or any other type of advice. Always consult with a qualified professional before making investment decisions.
+    </div>
   </section>
 </BaseLayout>
 
 <style>
-  .placeholder {
-    max-width: 720px;
+  /* ===== Section 1: Hero ===== */
+  .nl-hero {
+    padding: var(--space-12) var(--space-5) var(--space-8);
+    max-width: 1200px;
     margin: 0 auto;
-    padding: var(--space-12) var(--space-5);
     text-align: center;
   }
-  .placeholder h1 {
-    font-size: var(--type-h1-size);
-    line-height: var(--type-h1-lh);
-    color: var(--color-navy);
-    margin-bottom: var(--space-3);
+  .nl-hero h1 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 56px;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    color: var(--text-primary);
+    margin: 0 0 var(--space-3);
   }
-  .placeholder p {
-    color: var(--text-muted);
+  .nl-hero .hero-sub {
+    font-size: 19px;
+    line-height: 1.55;
+    color: var(--text-secondary);
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  /* ===== Section 2: What you'll get ===== */
+  .nl-bullets-band {
+    padding: var(--space-6) var(--space-5);
+    background: var(--bg-page);
+  }
+  .nl-bullets-inner {
+    max-width: 1040px;
+    margin: 0 auto;
+  }
+  .nl-bullets-head {
+    text-align: center;
+    margin-bottom: var(--space-5);
+  }
+  .nl-bullets-head h2 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 32px;
+    color: var(--text-primary);
+    margin: 0;
+  }
+  .nl-bullets-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4) var(--space-6);
+    max-width: 880px;
+    margin: 0 auto;
+  }
+  .nl-bullet {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+  .nl-bullet-icon {
+    flex: 0 0 auto;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-gold);
+  }
+  .nl-bullet-icon :global(svg) {
+    width: 26px;
+    height: 26px;
+  }
+  .nl-bullet-text {
     font-size: 17px;
-    line-height: 1.6;
+    line-height: 1.45;
+    color: var(--text-primary);
+  }
+
+  /* ===== Section 3: Beehiiv signup form (focal, no surrounding decoration) ===== */
+  .nl-form-band {
+    padding: var(--space-8) var(--space-5);
+    background: var(--bg-page);
+  }
+  .nl-form-inner {
+    max-width: 560px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .nl-form {
+    display: flex;
+    gap: var(--space-2);
+    align-items: stretch;
+  }
+  .nl-form input[type="email"] {
+    flex: 1 1 auto;
+    padding: 14px 16px;
+    border: 1px solid var(--border-input);
+    border-radius: 4px;
+    font-size: 16px;
+    font-family: inherit;
+    color: var(--text-primary);
+    background: #fff;
+  }
+  .nl-form button {
+    flex: 0 0 auto;
+    padding: 14px 24px;
+    border: none;
+    border-radius: 4px;
+    background: var(--color-gold);
+    color: var(--color-navy);
+    font-weight: 700;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  .nl-social-proof {
+    margin-top: var(--space-3);
+    font-size: 14px;
+    color: var(--text-secondary);
+  }
+
+  /* ===== Section 4: Amplified disclaimer (duplicated from stack.astro pattern) ===== */
+  .amplified-disclaimer-band {
+    padding: 0 var(--space-5);
+  }
+  .amplified-disclaimer {
+    max-width: 880px;
+    margin: var(--space-8) auto var(--space-12);
+    padding: var(--space-4) var(--space-5);
+    border-left: 6px solid var(--color-crimson);
+    background: var(--bg-surface);
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--text-primary);
+  }
+  .amplified-disclaimer .label {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.22em;
+    color: var(--color-crimson);
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: var(--space-1);
+  }
+
+  /* ===== Mobile (≤780px) ===== */
+  @media (max-width: 780px) {
+    .nl-hero {
+      padding: var(--space-5) var(--space-3) var(--space-4);
+    }
+    .nl-hero h1 {
+      font-size: 38px;
+      line-height: 1.05;
+    }
+    .nl-hero .hero-sub {
+      font-size: 16px;
+    }
+    .nl-bullets-band {
+      padding: var(--space-5) var(--space-3);
+    }
+    .nl-bullets-head h2 {
+      font-size: 28px;
+      margin-bottom: var(--space-3);
+    }
+    .nl-bullets-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-3);
+    }
+    .nl-bullet-icon {
+      width: 40px;
+      height: 40px;
+    }
+    .nl-bullet-icon :global(svg) {
+      width: 22px;
+      height: 22px;
+    }
+    .nl-bullet-text {
+      font-size: 16px;
+    }
+    .nl-form-band {
+      padding: var(--space-5) var(--space-3);
+    }
+    .nl-form {
+      flex-direction: column;
+    }
+    .nl-form button {
+      width: 100%;
+    }
+    .amplified-disclaimer-band {
+      padding: 0 var(--space-3);
+    }
+    .amplified-disclaimer {
+      margin: var(--space-4) auto var(--space-6);
+      padding: var(--space-3);
+      border-left-width: 5px;
+      font-size: 13px;
+      line-height: 1.6;
+    }
   }
 </style>
