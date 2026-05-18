@@ -22,7 +22,7 @@ const {
 } = Astro.props;
 
 const SITE_URL = 'https://buyholdwrite.com';
-const currentPath = currentPathProp ?? Astro.url.pathname;
+const currentPath = (currentPathProp ?? Astro.url.pathname).replace(/\/$/, '') || '/';
 const canonicalUrl = canonicalPath
   ? `${SITE_URL}${canonicalPath}`
   : `${SITE_URL}${Astro.url.pathname}`;
