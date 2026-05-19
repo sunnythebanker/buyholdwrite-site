@@ -1,0 +1,140 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Blog — buyholdwrite.com"
+  description="Educational articles for the three audiences — 401K rollovers, self-directed IRAs, and US investing for non-residents."
+  canonicalPath="/blog"
+>
+  <!-- Section 1: Header (locked copy per Build_01 §Page 5) -->
+  <section class="bi-header">
+    <h1>Blog</h1>
+    <p class="bi-sub">Educational articles for the three audiences.</p>
+  </section>
+
+  <!-- Section 2: Empty state — pre-Phase 5. Filter tabs + card grid + pagination restored when first articles publish via Phase 5 Workflow 1. -->
+  <section class="bi-empty">
+    <p>The first articles are in draft. Subscribe to the newsletter and you'll get them in your inbox the week they publish.</p>
+  </section>
+
+  <!-- Section 3: Beehiiv signup form (stub pattern duplicated from newsletter.astro:51-61 per consistency rule) -->
+  <section class="bi-form-band">
+    <div class="bi-form-inner">
+      <!-- BEEHIIV EMBED — paste embed code from Beehiiv dashboard > Subscribe forms before launch. v1 placeholder below. -->
+      <form class="bi-form" onsubmit="return false;">
+        <input type="email" placeholder="name@example.com" aria-label="Email address" />
+        <button type="submit">Subscribe</button>
+      </form>
+      <div class="bi-social-proof">Join our earliest readers.</div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* ===== Section 1: Header (Build_01 §Page 5 — verbatim H1 + sub-line) ===== */
+  .bi-header {
+    padding: var(--space-12) var(--space-5) var(--space-5);
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .bi-header h1 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 64px;
+    line-height: 1.05;
+    letter-spacing: -0.015em;
+    color: var(--color-navy);
+    margin: 0 0 var(--space-1);
+  }
+  .bi-header .bi-sub {
+    font-size: 17px;
+    color: var(--text-muted);
+    max-width: 520px;
+    margin: 0;
+  }
+
+  /* ===== Section 2: Empty state ===== */
+  .bi-empty {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: var(--space-6) var(--space-5) var(--space-8);
+  }
+  .bi-empty p {
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--text-primary);
+    max-width: 640px;
+    margin: 0;
+  }
+
+  /* ===== Section 3: Beehiiv signup (focal, no surrounding decoration — matches newsletter.astro pattern) ===== */
+  .bi-form-band {
+    padding: var(--space-6) var(--space-5) var(--space-12);
+    background: var(--bg-page);
+  }
+  .bi-form-inner {
+    max-width: 560px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .bi-form {
+    display: flex;
+    gap: var(--space-2);
+    align-items: stretch;
+  }
+  .bi-form input[type="email"] {
+    flex: 1 1 auto;
+    padding: 14px 16px;
+    border: 1px solid var(--border-input);
+    border-radius: 4px;
+    font-size: 16px;
+    font-family: inherit;
+    color: var(--text-primary);
+    background: #fff;
+  }
+  .bi-form button {
+    flex: 0 0 auto;
+    padding: 14px 24px;
+    border: none;
+    border-radius: 4px;
+    background: var(--color-gold);
+    color: var(--color-navy);
+    font-weight: 700;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  .bi-social-proof {
+    margin-top: var(--space-3);
+    font-size: 14px;
+    color: var(--text-muted);
+  }
+
+  /* ===== Mobile (≤780px) ===== */
+  @media (max-width: 780px) {
+    .bi-header {
+      padding: var(--space-6) var(--space-3) var(--space-3);
+    }
+    .bi-header h1 {
+      font-size: 42px;
+    }
+    .bi-header .bi-sub {
+      font-size: 16px;
+    }
+    .bi-empty {
+      padding: var(--space-4) var(--space-3) var(--space-5);
+    }
+    .bi-empty p {
+      font-size: 16px;
+    }
+    .bi-form-band {
+      padding: var(--space-4) var(--space-3) var(--space-8);
+    }
+    .bi-form {
+      flex-direction: column;
+    }
+    .bi-form button {
+      width: 100%;
+    }
+  }
+</style>
