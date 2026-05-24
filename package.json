@@ -9,7 +9,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "validate:jsonld": "node scripts/validate-jsonld.mjs ./dist"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.18",
