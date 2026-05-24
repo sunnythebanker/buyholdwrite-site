@@ -1,0 +1,7 @@
+{
+  "recurse": true,
+  "redirects": "warn",
+  "skip": ["^https?://(?!localhost)"],
+  "checkFragments": false,
+  "checkCss": false
+}
